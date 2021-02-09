@@ -1,6 +1,7 @@
 #ifndef COREENGINE_H
 #define COREENGINE_H
 
+#include "Scene.h"
 #include "GameInterface.h"
 #include "Window.h"
 #include "Timer.h"
@@ -19,9 +20,13 @@ public:
 
 	bool OnCreate(std::string name_, int width_, int height_);
 	void Run();
-	bool GetIsRunning();
+	void Exit();
+
+	bool GetIsRunning() const;
+	int GetCurrentScene() const;
 
 	void SetGameInterface(GameInterface* gameInterface_);
+	void SetCurrentScene(int sceneNum_);
 
 private:
 	CoreEngine();
@@ -40,6 +45,8 @@ private:
 	unsigned int fps;
 
 	GameInterface* gameInterface;
+
+	int currentSceneNum;
 };
 
 #endif // !COREENGINE_H

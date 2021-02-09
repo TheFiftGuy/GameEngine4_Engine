@@ -12,7 +12,7 @@ Window::~Window()	{
 
 bool Window::OnCreate(std::string name_, int width_, int height_)	{
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-		std::cout << "Failed to initialize SDL" << std::endl;
+		Debug::FatalError("Failed to init SDL", "Window.cpp", __LINE__);
 		return false;
 	}
 	this->width = width_;
@@ -28,7 +28,8 @@ bool Window::OnCreate(std::string name_, int width_, int height_)	{
 		SDL_WINDOW_OPENGL); //one line of thing(stuff,stuff,....)
 
 	if (window == nullptr) {
-		std::cout << "Failed to create window" << std::endl;
+		Debug::FatalError("Failed to create Window", "Window.cpp", __LINE__);
+		
 		return false;
 	}
 
@@ -38,12 +39,12 @@ bool Window::OnCreate(std::string name_, int width_, int height_)	{
 	//GLEW is the library we use for OpenGL calls/API
 	GLenum error = glewInit();
 	if (error != GLEW_OK) { // if GLenum is NOT = OK, then its an error
-		std::cout << "Failed to initialize GLEW" << std::endl;
+		Debug::FatalError("Failed to init GLEW", "Window.cpp", __LINE__);
 		return false;
 	}
 	glEnable(GL_DEPTH_TEST);
 
-	std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl; //optional
+	std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl; //You said this is not for DEBUG yet
 	return true;
 
 }

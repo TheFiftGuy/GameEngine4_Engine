@@ -6,7 +6,7 @@ int main(int argc, char* argv[]) {
 	CoreEngine::GetInstance()->SetGameInterface(new Game1() );
 
 	if (!CoreEngine::GetInstance()->OnCreate("Game 258 Engine", 800, 600)) {
-		std::cout << "Engine failed to initialize" << std::endl;
+		Debug::FatalError("Engine Failed to init", "Main.cpp", __LINE__);
 		return 0;
 	}
 	CoreEngine::GetInstance()->Run();

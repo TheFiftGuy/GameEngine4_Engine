@@ -7,6 +7,7 @@ CoreEngine::CoreEngine()	{
 	isRunning = false;
 	fps = 60;
 	gameInterface = nullptr;
+	currentSceneNum = 0;
 }
 
 CoreEngine::~CoreEngine()	{
@@ -25,14 +26,14 @@ bool CoreEngine::OnCreate(std::string name_, int width_, int height_)	{
 	Debug::OnCreate();
 	window = new Window();
 	if (!window->OnCreate(name_, width_, height_)) {  //both calls OnCreate & checks return value
-		std::cout << "Window failed to initialize" << std::endl;
+		Debug::FatalError("Window failed to initialize", "CoreEngine.cpp", __LINE__);
 		OnDestroy();
 		return isRunning = false; //sets + returns false
 	}
 
 	if (gameInterface) {
 		if (!gameInterface->OnCreate() ) {
-			std::cout << "Game failed to initialize" << std::endl; \
+			Debug::FatalError("Game failed to initialize", "CoreEngine.cpp", __LINE__);
 			OnDestroy();
 			return isRunning = false;
 		}
@@ -56,8 +57,16 @@ void CoreEngine::Run()	{
 	}
 }
 
-bool CoreEngine::GetIsRunning()	{
+void CoreEngine::Exit()	{
+	isRunning = false;
+}
+
+bool CoreEngine::GetIsRunning() const	{
 	return isRunning;
+}
+
+int CoreEngine::GetCurrentScene() const	{
+	return currentSceneNum;
 }
 
 void CoreEngine::SetGameInterface(GameInterface* gameInterface_)	{
@@ -65,11 +74,15 @@ void CoreEngine::SetGameInterface(GameInterface* gameInterface_)	{
 
 }
 
+void CoreEngine::SetCurrentScene(int sceneNum_)	{
+	currentSceneNum = sceneNum_;
+}
+
 void CoreEngine::Update(const float deltaTime_)	{
 	
 	if (gameInterface) {
 		gameInterface->Update(deltaTime_);
-		std::cout << deltaTime_ << std::endl; //to test the timer for marking
+		std::cout << deltaTime_ << std::endl; //to test the timer for marking - not DEBUG worthy
 	}
 
 }

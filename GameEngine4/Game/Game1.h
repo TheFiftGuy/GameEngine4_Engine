@@ -2,6 +2,8 @@
 #define GAME1_H
 
 #include "../Engine/Core/CoreEngine.h" // ../ means jump out of folder, then it goes into Engine/----
+#include "Scenes/StartScene.h"
+#include "Scenes/GameScene.h"
 
 class Game1 : public GameInterface	{
 public:
@@ -11,6 +13,10 @@ public:
 	bool OnCreate() override;
 	void Update(const float deltaTime_) override;
 	void Render() override;
+private:
+	int currentSceneNum;
+	Scene* currentScene;
+	void BuildScene();
 };
 
 
