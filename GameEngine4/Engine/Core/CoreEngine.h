@@ -1,8 +1,12 @@
 #ifndef COREENGINE_H
 #define COREENGINE_H
 
+#include "GameInterface.h"
 #include "Window.h"
+#include "Timer.h"
+#include "Debug.h"
 #include <memory>
+
 
 class CoreEngine	{
 public:
@@ -17,6 +21,8 @@ public:
 	void Run();
 	bool GetIsRunning();
 
+	void SetGameInterface(GameInterface* gameInterface_);
+
 private:
 	CoreEngine();
 	~CoreEngine();
@@ -30,6 +36,10 @@ private:
 	Window* window;
 	bool isRunning;
 
+	Timer timer;
+	unsigned int fps;
+
+	GameInterface* gameInterface;
 };
 
 #endif // !COREENGINE_H
