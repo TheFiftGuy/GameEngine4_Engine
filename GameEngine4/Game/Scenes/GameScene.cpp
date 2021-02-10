@@ -7,7 +7,7 @@ GameScene::~GameScene()	{
 }
 
 bool GameScene::OnCreate()	{
-	Debug::Info("GameScene created", "GameScene.cpp", __LINE__);
+	Debug::Info("GameScene created", "GameScene.cpp", __LINE__); //Loaded the main level
 	return true;
 }
 
