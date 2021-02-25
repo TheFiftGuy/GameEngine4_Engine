@@ -1,0 +1,11 @@
+
+[*]
+
+# ReSharper properties
+resharper_anonymous_method_declaration_braces = end_of_line
+resharper_case_block_braces = end_of_line
+resharper_invocable_declaration_braces = end_of_line
+resharper_namespace_declaration_braces = end_of_line
+resharper_other_braces = end_of_line
+resharper_requires_expression_braces = end_of_line
+resharper_type_declaration_braces = end_of_line

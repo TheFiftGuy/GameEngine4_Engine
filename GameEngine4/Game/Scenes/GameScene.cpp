@@ -24,24 +24,30 @@ bool GameScene::OnCreate()	{
 	//v.position = glm::vec3(0.5f, -0.5f, 0.0f);
 	//vertexList.push_back(v);
 
-	v.position = glm::vec3(-0.5f, 0.5f, 0.0f); //top left 
+	v.position = glm::vec3(-0.5f, 0.5f, 0.0f); //top left
+	v.colour = glm::vec3(1.0f, 0.0f, 0.0f);
 	vertexList.push_back(v);
 	v.position = glm::vec3(-0.5f, -0.5f, 0.0f);//bottom left
+	v.colour = glm::vec3(0.0f, 1.0f, 0.0f);
 	vertexList.push_back(v);
 	v.position = glm::vec3(0.5f, -0.5f, 0.0f);//bottom right
+	v.colour = glm::vec3(0.0f, 0.0f, 1.0f);
 	vertexList.push_back(v);
 
 	//2nd triangle
 	v.position = glm::vec3(0.5f, 0.5f, 0.0f);//top right
+	v.colour = glm::vec3(0.0f, 1.0f, 0.0f);
 	vertexList.push_back(v);
 	v.position = glm::vec3(-0.5f, 0.5f, 0.0f);//top left
+	v.colour = glm::vec3(1.0f, 0.0f, 0.0f);
 	vertexList.push_back(v);
 	v.position = glm::vec3(0.5f, -0.5f, 0.0f);//bottom right
+	v.colour = glm::vec3(0.0f, 0.0f, 1.0f);
 	vertexList.push_back(v);
 
 	//note that despite the object being a square, since the window is a rectangle its being distorted.
 
-	Model* model = new Model();
+	Model* model = new Model(ShaderHandler::GetInstance()->GetShader("colourShader"));
 	model->AddMesh(new Mesh(vertexList));
 	shape = new GameObject(model);
 
