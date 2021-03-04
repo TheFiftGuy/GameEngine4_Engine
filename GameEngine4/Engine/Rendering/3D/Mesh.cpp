@@ -2,9 +2,11 @@
 
 
 
-Mesh::Mesh(std::vector<Vertex>& vertexList_) : vertexList(std::vector<Vertex>())	{
-	VAO = VBO = 0;
+Mesh::Mesh(std::vector<Vertex>& vertexList_, GLuint shaderProgram_) : vertexList(std::vector<Vertex>()), shaderProgram(0)	{
+	VAO = 0;
+	VBO = 0;
 	vertexList = vertexList_;
+	shaderProgram = shaderProgram_;
 	GenerateBuffers();
 }
 
@@ -15,9 +17,12 @@ Mesh::~Mesh()	{
 	vertexList.clear();
 }
 
-void Mesh::Render()	{
+void Mesh::Render(glm::mat4 transform_)	{
 	glBindVertexArray(VAO);
-
+	//glEnable(GL_DEPTH_TEST);
+	
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, value_ptr(transform_));
+	
 	glDrawArrays(GL_TRIANGLES, 0, vertexList.size());
 
 	glBindVertexArray(0);
@@ -49,4 +54,5 @@ void Mesh::GenerateBuffers()	{
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+	modelLoc = glGetUniformLocation(shaderProgram, "model");
 }

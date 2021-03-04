@@ -14,6 +14,7 @@ public:
 
 private:
 	GameObject* shape;
+	Model* model;
 };
 
 #endif
