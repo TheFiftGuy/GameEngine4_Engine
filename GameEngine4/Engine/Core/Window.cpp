@@ -45,6 +45,8 @@ bool Window::OnCreate(std::string name_, int width_, int height_)	{
 	
 
 	std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl; //You said this is not for DEBUG yet
+	glViewport(0, 0, width, height);
+	
 	return true;
 
 }

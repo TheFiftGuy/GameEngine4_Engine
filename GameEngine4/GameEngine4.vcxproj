@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Camera\Camera.cpp" />
     <ClCompile Include="Engine\Core\Debug.cpp" />
     <ClCompile Include="Engine\Core\CoreEngine.cpp" />
     <ClCompile Include="Engine\Rendering\3D\GameObject.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="Engine\Graphics\ShaderHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Camera\Camera.h" />
     <ClInclude Include="Engine\Core\Debug.h" />
     <ClInclude Include="Engine\Core\CoreEngine.h" />
     <ClInclude Include="Engine\Core\Window.h" />

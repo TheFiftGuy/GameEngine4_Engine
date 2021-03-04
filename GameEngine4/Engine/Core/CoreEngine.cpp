@@ -50,9 +50,9 @@ bool CoreEngine::OnCreate(std::string name_, int width_, int height_)	{
 void CoreEngine::Run()	{
 	while (isRunning) {
 		timer.UpdateFrameTicks();
-		Update(timer.GetDeltaTime()	);
+		Update(timer.GetDeltaTime());
 		Render();
-		SDL_Delay(timer.GetSleepTime(fps) );
+		SDL_Delay(timer.GetSleepTime(fps));
 	}
 
 	if (!isRunning) {
@@ -72,6 +72,18 @@ int CoreEngine::GetCurrentScene() const	{
 	return currentSceneNum;
 }
 
+float CoreEngine::GetScreenWidth() const	{
+	return static_cast<float>(window->GetWidth());
+}
+
+float CoreEngine::GetScreenHeight() const{
+	return static_cast<float>(window->GetHeight());
+}
+
+Camera* CoreEngine::GetCamera() const	{
+	return camera;
+}
+
 void CoreEngine::SetGameInterface(GameInterface* gameInterface_)	{
 	gameInterface = gameInterface_;
 
@@ -79,6 +91,10 @@ void CoreEngine::SetGameInterface(GameInterface* gameInterface_)	{
 
 void CoreEngine::SetCurrentScene(int sceneNum_)	{
 	currentSceneNum = sceneNum_;
+}
+
+void CoreEngine::SetCamera(Camera* camera_)	{
+	camera = camera_;
 }
 
 void CoreEngine::Update(const float deltaTime_)	{
@@ -105,6 +121,10 @@ void CoreEngine::OnDestroy()	{
 	
 	delete gameInterface;
 	gameInterface = nullptr;
+
+	delete camera;
+	camera = nullptr;
+	
 
 	delete window;
 	window = nullptr;

@@ -14,6 +14,9 @@ GameScene::~GameScene()	{
 bool GameScene::OnCreate()	{
 	Debug::Info("GameScene created", "GameScene.cpp", __LINE__); //Info message to say we loaded the GameScene
 
+	CoreEngine::GetInstance()->SetCamera(new Camera());
+	CoreEngine::GetInstance()->GetCamera()->SetPosition(vec3(0.0f, 0.0f, 4.0f));
+	
 	Vertex v;
 	std::vector<Vertex> vertexList;
 	vertexList.reserve(36);
@@ -166,7 +169,7 @@ bool GameScene::OnCreate()	{
 		
 	model = new Model(ShaderHandler::GetInstance()->GetShader("colourShader"));
 	model->AddMesh(new Mesh(vertexList, ShaderHandler::GetInstance()->GetShader("colourShader")));
-	model->SetScale(vec3(0.5f));
+	//model->SetScale(vec3(0.5f));
 	shape = new GameObject(model);
 
 	return true;
@@ -177,5 +180,5 @@ void GameScene::Update(const float deltaTime_)	{
 }
 
 void GameScene::Render()	{
-	shape->Render();
+	shape->Render(CoreEngine::GetInstance()->GetCamera());
 }

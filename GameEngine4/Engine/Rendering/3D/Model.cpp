@@ -22,10 +22,10 @@ Model::~Model()	{
 	}
 }
 
-void Model::Render()	{
+void Model::Render(Camera* camera_)	{
 	glUseProgram(shaderProgram);
 	for (auto m : meshes) {
-		m->Render(GetTransform());
+		m->Render(camera_, GetTransform());
 	}
 }
 

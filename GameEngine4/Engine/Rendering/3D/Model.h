@@ -13,7 +13,7 @@ public:
 	
 	~Model();
 
-	void Render();
+	void Render(Camera* camera_);
 	void AddMesh(Mesh* mesh_);
 
 	vec3 GetPosition() const;
