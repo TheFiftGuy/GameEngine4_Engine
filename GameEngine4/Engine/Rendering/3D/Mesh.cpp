@@ -29,6 +29,7 @@ void Mesh::Render(Camera* camera_, glm::mat4 transform_)	{
 	glUniform3fv(lightPos, 1, value_ptr(camera_->GetLightSourceList().front()->GetPosition()));
 	glUniform1f(lightAmbient, camera_->GetLightSourceList().front()->GetAmbient());
 	glUniform1f(lightDiffuse, camera_->GetLightSourceList().front()->GetDiffuse());
+	glUniform1f(lightSpecular, camera_->GetLightSourceList().front()->GetSpecular());
 	glUniform3fv(lightColour, 1, value_ptr(camera_->GetLightSourceList().front()->GetLightColour()));
 	
 	
@@ -81,5 +82,6 @@ void Mesh::GenerateBuffers()	{
 	lightPos = glGetUniformLocation(shaderProgram, "light.lightPos");
 	lightAmbient = glGetUniformLocation(shaderProgram, "light.ambient");
 	lightDiffuse = glGetUniformLocation(shaderProgram, "light.diffuse");
+	lightSpecular = glGetUniformLocation(shaderProgram, "light.specular");
 	lightColour = glGetUniformLocation(shaderProgram, "light.lightColour");
 }
