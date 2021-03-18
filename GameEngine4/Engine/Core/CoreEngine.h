@@ -12,6 +12,7 @@
 #include "../Rendering/3D/GameObject.h"
 
 #include "../Graphics/ShaderHandler.h"
+#include "../Graphics/TextureHandler.h"
 
 #include "../Camera/Camera.h"
 
@@ -27,7 +28,7 @@ public:
 	bool OnCreate(std::string name_, int width_, int height_);
 	void Run();
 	void Exit();
-
+	
 	bool GetIsRunning() const;
 	int GetCurrentScene() const;
 	float GetScreenWidth() const;

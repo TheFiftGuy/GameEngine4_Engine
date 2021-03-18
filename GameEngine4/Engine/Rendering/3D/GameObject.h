@@ -9,7 +9,7 @@ public:
 	~GameObject();
 
 	void Render(Camera* camera_);
-
+	
 private:
 	Model* model;
 
