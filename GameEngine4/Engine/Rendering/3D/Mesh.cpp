@@ -1,7 +1,9 @@
 #include "Mesh.h"
 
 Mesh::Mesh(std::vector<Vertex>& vertexList_, GLuint textureID_, GLuint shaderProgram_) : VAO(0), VBO(0), vertexList(std::vector<Vertex>()),
-shaderProgram(0), textureID(0), viewLoc(0), projectionLoc(0), textureLoc(0)	{
+shaderProgram(0), textureID(0), viewLoc(0), projectionLoc(0), textureLoc(0), viewPos(0), lightPos(0), lightAmbient(0),
+lightDiffuse(0), lightColour(0)
+{
 	vertexList = vertexList_;
 	shaderProgram = shaderProgram_;
 	textureID = textureID_;
@@ -21,6 +23,15 @@ void Mesh::Render(Camera* camera_, glm::mat4 transform_)	{
 	glBindTexture(GL_TEXTURE_2D, textureID);
 	
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(camera_->GetView()));
+	
+	//glUniform3f(viewPos, camera_->GetPosition().x, camera_->GetPosition().y, camera_->GetPosition().z);
+	glUniform3fv(viewPos, 1, value_ptr(camera_->GetPosition()));
+	glUniform3fv(lightPos, 1, value_ptr(camera_->GetLightSourceList().front()->GetPosition()));
+	glUniform1f(lightAmbient, camera_->GetLightSourceList().front()->GetAmbient());
+	glUniform1f(lightDiffuse, camera_->GetLightSourceList().front()->GetDiffuse());
+	glUniform3fv(lightColour, 1, value_ptr(camera_->GetLightSourceList().front()->GetLightColour()));
+	
+	
 	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, value_ptr(camera_->GetPerspective()));
 	
 	glBindVertexArray(VAO);
@@ -64,4 +75,11 @@ void Mesh::GenerateBuffers()	{
 	viewLoc = glGetUniformLocation(shaderProgram, "view");
 	projectionLoc = glGetUniformLocation(shaderProgram, "projection");
 	textureLoc = glGetUniformLocation(shaderProgram, "inputTexture");
+
+	//UNFINISHED
+	viewPos = glGetUniformLocation(shaderProgram, "viewPosition");
+	lightPos = glGetUniformLocation(shaderProgram, "light.lightPos");
+	lightAmbient = glGetUniformLocation(shaderProgram, "light.ambient");
+	lightDiffuse = glGetUniformLocation(shaderProgram, "light.diffuse");
+	lightColour = glGetUniformLocation(shaderProgram, "light.lightColour");
 }

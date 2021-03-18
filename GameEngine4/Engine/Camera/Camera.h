@@ -3,6 +3,9 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "../FX/LightSource.h"
+#include <vector>
+
 
 using namespace  glm;
 
@@ -19,6 +22,9 @@ public:
 	mat4 GetOrthographic() const;
 	vec3 GetPosition() const;
 
+	void AddLightSource(LightSource* lightSource_);
+	std::vector<LightSource*> GetLightSourceList() const;
+
 private:
 	void UpdateCameraVectors();
 	vec3 position;
@@ -27,6 +33,8 @@ private:
 	float yaw, pitch;
 	float nearPlane, farPlane;
 	vec3 forward, up, right, worldUp;
+
+	std::vector<LightSource*> lightSources;
 	
 };
 

@@ -3,6 +3,8 @@
 #include "../Core/CoreEngine.h"
 
 Camera::Camera()    {
+    lightSources.reserve(5);
+    
     position = forward = up = right = worldUp = vec3();
     fieldOfView = nearPlane = farPlane = yaw = pitch =  0.0f;
     perspective = orthographic = view = mat4();
@@ -26,7 +28,13 @@ Camera::Camera()    {
 }
 
 Camera::~Camera()   {
-	
+	if(!lightSources.empty()) {
+        for (auto t : lightSources) {
+            delete t;
+            t = nullptr;
+        }
+        lightSources.clear();
+	}
 }
 
 void Camera::SetPosition(vec3 position_)    {
@@ -59,6 +67,16 @@ vec3 Camera::GetPosition() const
 {
     return position;
 }
+
+void Camera::AddLightSource(LightSource* lightSource_)  {
+    lightSources.push_back(lightSource_);
+}
+
+std::vector<LightSource*> Camera::GetLightSourceList() const    {
+    return lightSources;
+}
+
+
 
 void Camera::UpdateCameraVectors()  {
     forward.x = cos(radians(yaw)) * cos(radians(pitch));

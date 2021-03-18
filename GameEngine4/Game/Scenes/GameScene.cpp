@@ -17,6 +17,10 @@ bool GameScene::OnCreate() {
 
 	CoreEngine::GetInstance()->SetCamera(new Camera());
 	CoreEngine::GetInstance()->GetCamera()->SetPosition(vec3(0.0f, 0.0f, 4.0f));
+	
+	LightSource* light1 = new LightSource(vec3(0.0f, 0.0f, 2.0f), 0.1f, 0.5f, 0.5f, vec3(1.0f, 1.0f, 1.0f));
+	CoreEngine::GetInstance()->GetCamera()->AddLightSource(light1);
+	
 	TextureHandler::GetInstance()->CreateTexture("DefaultTexture", "./Resources/Textures/DefaultTexture.png");
 
 	Vertex v;
