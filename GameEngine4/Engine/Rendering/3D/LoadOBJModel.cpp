@@ -35,11 +35,11 @@ vector<SubMesh> LoadOBJModel::GetSubMeshes()
 }
 
 void LoadOBJModel::PostProcessing()	{
-	for (auto t : indices) {
+	for (unsigned int i = 0; i < indices.size(); i++) {
 		Vertex vert;
-		vert.position = vertices[indices[t]];
-		vert.normal = normals[normalIndices[t]];
-		vert.textureCoordinates = textureCoords[textureIndices[t]];
+		vert.position = vertices[indices[i]-1];
+		vert.normal = normals[normalIndices[i]-1];
+		vert.textureCoordinates = textureCoords[textureIndices[i]-1];
 		meshVertices.push_back(vert);
 	}
 	SubMesh mesh;
@@ -85,18 +85,19 @@ void LoadOBJModel::LoadModel(const string& filePath_)	{
 		//TextureCoords data
 		else if (line.substr(0, 3) == "vt ") {
 			stringstream vt(line.substr(3));
-			float x, y;
-			vt >> x >> y;
+			float x, y, z;
+			vt >> x >> y >> z;
 			textureCoords.push_back(vec2(x, y));
 		}
 
 		//Face data
 		if (line.substr(0, 2) == "f ") {
 			stringstream f(line.substr(2));
-			
+
+			char s1, s2, s3, s4, s5, s6;
 			unsigned int verts1, verts2, verts3, texs1, texs2, texs3, norms1, norms2, norms3;
 			
-			f >> verts1 >> texs1 >> norms1 >> verts2 >> texs2 >> norms2 >> verts3 >> texs3 >> norms3;
+			f >> verts1 >> s1 >> texs1 >> s2 >> norms1 >> verts2 >> s3 >> texs2 >> s4 >> norms2 >> verts3 >> s5 >> texs3 >> s6 >> norms3;
 			indices.push_back(verts1);
 			indices.push_back(verts2);
 			indices.push_back(verts3);
