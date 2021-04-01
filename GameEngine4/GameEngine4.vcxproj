@@ -149,6 +149,7 @@
     <ClCompile Include="Game\Scenes\GameScene.cpp" />
     <ClCompile Include="Game\Game1.cpp" />
     <ClCompile Include="Engine\FX\LightSource.cpp" />
+    <ClCompile Include="Engine\Rendering\3D\LoadOBJModel.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Engine\Core\Window.cpp" />
     <ClCompile Include="Engine\Core\Timer.cpp" />
@@ -175,10 +176,9 @@
     <ClInclude Include="Engine\Graphics\ShaderHandler.h" />
     <ClInclude Include="Engine\Graphics\TextureHandler.h" />
     <ClInclude Include="Engine\FX\LightSource.h" />
+    <ClInclude Include="Engine\Rendering\3D\LoadOBJModel.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Engine\Shaders\ColourFragmentShader.glsl" />
-    <None Include="Engine\Shaders\ColourVertexShader.glsl" />
     <None Include="Engine\Shaders\FragmentShader.glsl" />
     <None Include="Engine\Shaders\VertexShader.glsl" />
   </ItemGroup>
