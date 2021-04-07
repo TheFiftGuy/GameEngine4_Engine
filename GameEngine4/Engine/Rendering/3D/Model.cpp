@@ -52,6 +52,10 @@ mat4 Model::GetTransform(unsigned int index_) const	{
 	return modelInstances[index_];
 }
 
+GLuint Model::GetShaderProgram() const	{
+	return shaderProgram;
+}
+
 mat4 Model::CreateTransform(vec3 position_, float angle_, vec3 rotation_, vec3 scale_) const	{
 	mat4 model;
 	model = translate(model, position_);

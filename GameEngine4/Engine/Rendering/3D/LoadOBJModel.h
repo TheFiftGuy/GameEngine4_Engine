@@ -3,7 +3,7 @@
 
 #include <sstream>
 #include "Mesh.h"
-#include "../../Graphics/TextureHandler.h"
+#include "../../FX/MaterialLoader.h"
 
 using namespace  std;
 
@@ -27,7 +27,8 @@ private:
 	vector<unsigned int> indices, normalIndices, textureIndices;
 	vector<Vertex> meshVertices;
 	vector<SubMesh> subMeshes;
-	GLuint currentTexture;
+
+	Material currentMaterial;
 };
 
 #endif

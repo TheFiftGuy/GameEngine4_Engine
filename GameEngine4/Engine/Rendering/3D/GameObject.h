@@ -1,5 +1,5 @@
 #ifndef GAMEOBJECT_H
-#define GAMEOBJECT
+#define GAMEOBJECT_H
 
 #include "Model.h"
 
@@ -16,11 +16,13 @@ public:
 	float GetAngle() const;
 	vec3 GetRotation() const;
 	vec3 GetScale() const;
+	string GetName() const;
 
 	void SetPosition(vec3 position_);
 	void SetAngle(float angle_);
 	void SetRotation(vec3 rotation_);
 	void SetScale(vec3 scale_);
+	void SetName(string name_);
 private:
 	Model* model;
 	unsigned int modelInstance;
@@ -28,6 +30,7 @@ private:
 	float angle;
 	vec3 rotation;
 	vec3 scale;
+	string name;
 };
 
-#endif // !
+#endif

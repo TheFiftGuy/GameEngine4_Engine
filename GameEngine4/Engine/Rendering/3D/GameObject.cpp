@@ -21,8 +21,7 @@ GameObject::GameObject(Model* model_, vec3 position_) : model(nullptr), modelIns
 }
 
 GameObject::~GameObject()	{
-	
-	delete model; //deleting a nullptr is safe as delete performs the check already
+	//model is deleted in the SceneGraph
 	model = nullptr;
 }
 
@@ -55,6 +54,10 @@ vec3 GameObject::GetScale() const
 	return scale;
 }
 
+string GameObject::GetName() const	{
+	return name;
+}
+
 void GameObject::SetPosition(vec3 position_)	{
 	position = position_;
 	if(model) {
@@ -81,4 +84,8 @@ void GameObject::SetScale(vec3 scale_)	{
 	if (model) {
 		model->UpdateInstance(modelInstance, position, angle, rotation, scale);
 	}
+}
+
+void GameObject::SetName(string name_)	{
+	name = name_;
 }

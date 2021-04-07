@@ -16,7 +16,8 @@ public:
 	void AddMesh(Mesh* mesh_);
 	unsigned int CreateInstance(vec3 position_, float angle_, vec3 rotation_, vec3 scale_);
 	void UpdateInstance(unsigned int index_, vec3 position_,float angle_, vec3 rotation_, vec3 scale_);
-	mat4 GetTransform(unsigned int index_) const;	
+	mat4 GetTransform(unsigned int index_) const;
+	GLuint GetShaderProgram() const;
 
 private:
 	mat4 CreateTransform(vec3 position_, float angle_, vec3 rotation_, vec3 scale_) const;

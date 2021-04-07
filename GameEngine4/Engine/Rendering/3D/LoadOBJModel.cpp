@@ -1,7 +1,7 @@
 #include "LoadOBJModel.h"
 
 LoadOBJModel::LoadOBJModel() : vertices(vector<vec3>()), normals(vector<vec3>()), textureCoords(vector<vec2>()), indices(vector<unsigned int>()),
-normalIndices(vector<unsigned int>()), textureIndices(vector<unsigned int>()), meshVertices(vector<Vertex>()), subMeshes(vector<SubMesh>()), currentTexture(0)
+normalIndices(vector<unsigned int>()), textureIndices(vector<unsigned int>()), meshVertices(vector<Vertex>()), subMeshes(vector<SubMesh>()), currentMaterial(Material())
 {
 	vertices.reserve(200);
 	normals.reserve(200);
@@ -45,7 +45,7 @@ void LoadOBJModel::PostProcessing()	{
 	SubMesh mesh;
 	mesh.vertexList = meshVertices;
 	mesh.meshIndices = indices;
-	mesh.textureID = currentTexture;
+	mesh.material = currentMaterial;
 
 	subMeshes.push_back(mesh);
 
@@ -54,8 +54,7 @@ void LoadOBJModel::PostProcessing()	{
 	textureIndices.clear();
 	meshVertices.clear();
 
-	currentTexture = 0;
-	
+	currentMaterial = Material();
 }
 
 void LoadOBJModel::LoadModel(const string& filePath_)	{
@@ -94,10 +93,10 @@ void LoadOBJModel::LoadModel(const string& filePath_)	{
 		if (line.substr(0, 2) == "f ") {
 			stringstream f(line.substr(2));
 
-			char s1, s2, s3, s4, s5, s6;
+			char s;
 			unsigned int verts1, verts2, verts3, texs1, texs2, texs3, norms1, norms2, norms3;
 			
-			f >> verts1 >> s1 >> texs1 >> s2 >> norms1 >> verts2 >> s3 >> texs2 >> s4 >> norms2 >> verts3 >> s5 >> texs3 >> s6 >> norms3;
+			f >> verts1 >> s >> texs1 >> s >> norms1 >> verts2 >> s >> texs2 >> s >> norms2 >> verts3 >> s >> texs3 >> s >> norms3;
 			indices.push_back(verts1);
 			indices.push_back(verts2);
 			indices.push_back(verts3);
@@ -125,22 +124,9 @@ void LoadOBJModel::LoadModel(const string& filePath_)	{
 }
 
 void LoadOBJModel::LoadMaterial(const string& matName_)	{
-	currentTexture = TextureHandler::GetInstance()->GetTexture(matName_);
-	if (currentTexture == 0) {
-		TextureHandler::GetInstance()->CreateTexture(matName_, "Resources/Textures/" + matName_ + ".png");
-		currentTexture = TextureHandler::GetInstance()->GetTexture(matName_);
-	}
+	currentMaterial = MaterialHandler::GetInstance()->GetMaterial(matName_);
 }
 
 void LoadOBJModel::LoadMaterialLibrary(const string& matFilePath_)	{
-	ifstream in(matFilePath_.c_str(), ios::in);
-	if(!in) {
-		Debug::Error("Cannot open MTL file: " + matFilePath_, " in LoadOBJModel.cpp", __LINE__);
-	}
-	string line;
-	while (getline(in,line)) {
-		if(line.substr(0,7) == "newmtl ") {
-			LoadMaterial(line.substr(7));
-		}
-	}
+	MaterialLoader::LoadMaterial(matFilePath_);
 }
