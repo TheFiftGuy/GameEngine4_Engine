@@ -40,6 +40,7 @@ void SceneGraph::OnDestroy()	{
 				entry.second.clear();
 			}
 		}
+		sceneModels.clear();
 	}
 }
 

@@ -11,6 +11,7 @@ normalIndices(vector<unsigned int>()), textureIndices(vector<unsigned int>()), m
 	textureIndices.reserve(200);
 	meshVertices.reserve(200);
 	subMeshes.reserve(10);
+	
 }
 
 LoadOBJModel::~LoadOBJModel()	{
@@ -32,6 +33,11 @@ void LoadOBJModel::LoadModel(const string& objFilePath_, const string& mtlFilePa
 vector<SubMesh> LoadOBJModel::GetSubMeshes()
 {
 	return subMeshes;
+}
+
+BoundingBox LoadOBJModel::GetBoundingBox() const
+{
+	return boundingBox;
 }
 
 void LoadOBJModel::PostProcessing()	{
@@ -119,6 +125,34 @@ void LoadOBJModel::LoadModel(const string& filePath_)	{
 		}
 
 		
+	}
+	float minX, minY, minZ, maxX, maxY, maxZ;
+	minX = minY = minZ = maxX = maxY = maxZ = 0.0f;
+	for (auto &v : vertices) {
+		if (v.x <= minX) {
+			boundingBox.minVert.x = v.x;
+			minX = v.x;
+		}
+		else if(v.x >= maxX) {
+			boundingBox.maxVert.x = v.x;
+			maxX = v.x;
+		}
+		if (v.y <= minY) {
+			boundingBox.minVert.y = v.y;
+			minY = v.y;
+		}
+		else if (v.y >= maxY) {
+			boundingBox.maxVert.y = v.y;
+			maxY = v.y;
+		}
+		if (v.z <= minZ) {
+			boundingBox.minVert.z = v.z;
+			minZ = v.z;
+		}
+		else if (v.z >= maxZ) {
+			boundingBox.maxVert.z = v.z;
+			maxZ = v.z;
+		}
 	}
 	PostProcessing();
 }
