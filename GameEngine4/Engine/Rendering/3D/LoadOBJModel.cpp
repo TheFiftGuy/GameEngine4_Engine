@@ -72,6 +72,11 @@ void LoadOBJModel::LoadModel(const string& filePath_)	{
 
 	string line;
 
+	float minX, minY, minZ, maxX, maxY, maxZ;
+	minX = minY = minZ = 10000.0f;
+	maxX = maxY = maxZ = -10000.0f;
+	
+	
 	while (getline(in, line)) {
 		//Vertex data
 		if (line.substr(0, 2) == "v ") {
@@ -79,6 +84,32 @@ void LoadOBJModel::LoadModel(const string& filePath_)	{
 			float x, y, z;
 			v >> x >> y >> z;
 			vertices.push_back(vec3(x, y, z));
+
+			if (x < minX) {
+				boundingBox.minVert.x = x;
+				minX = x;
+			}
+			else if (x> maxX) {
+				boundingBox.maxVert.x = x;
+				maxX = x;
+			}
+			if (y < minY) {
+				boundingBox.minVert.y = y;
+				minY = y;
+			}
+			else if (y > maxY) {
+				boundingBox.maxVert.y = y;
+				maxY = y;
+			}
+			if (z < minZ) {
+				boundingBox.minVert.z = z;
+				minZ = z;
+			}
+			else if (z > maxZ) {
+				boundingBox.maxVert.z = z;
+				maxZ = z;
+			}
+			
 		}
 		//Normal data
 		else if (line.substr(0, 3) == "vn ") {
@@ -122,36 +153,6 @@ void LoadOBJModel::LoadModel(const string& filePath_)	{
 				PostProcessing();
 			}
 			LoadMaterial(line.substr(7));
-		}
-
-		
-	}
-	float minX, minY, minZ, maxX, maxY, maxZ;
-	minX = minY = minZ = maxX = maxY = maxZ = 0.0f;
-	for (auto &v : vertices) {
-		if (v.x <= minX) {
-			boundingBox.minVert.x = v.x;
-			minX = v.x;
-		}
-		else if(v.x >= maxX) {
-			boundingBox.maxVert.x = v.x;
-			maxX = v.x;
-		}
-		if (v.y <= minY) {
-			boundingBox.minVert.y = v.y;
-			minY = v.y;
-		}
-		else if (v.y >= maxY) {
-			boundingBox.maxVert.y = v.y;
-			maxY = v.y;
-		}
-		if (v.z <= minZ) {
-			boundingBox.minVert.z = v.z;
-			minZ = v.z;
-		}
-		else if (v.z >= maxZ) {
-			boundingBox.maxVert.z = v.z;
-			maxZ = v.z;
 		}
 	}
 	PostProcessing();

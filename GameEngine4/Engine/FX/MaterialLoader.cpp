@@ -25,35 +25,35 @@ void MaterialLoader::LoadMaterial(std::string filePath_)	{
 			m.name = matName;
 		}
 		//Shininess
-		else if (line.substr(0, 3) == "Ns ") {
+		else if (line.substr(0, 4) == "\tNs ") {
 			std::stringstream ns(line.substr(4));
 			float shine;
 			ns >> shine;
 			m.shininess = shine;
 		}
 		//Transparency
-		else if (line.substr(0, 2) == "d ") {
+		else if (line.substr(0, 3) == "\td ") {
 			std::stringstream kd(line.substr(3));
 			float alpha;
 			kd >> alpha;
 			m.transparency = alpha;
 		}
 		//Ambient
-		else if (line.substr(0, 3) == "Ka ") {
+		else if (line.substr(0, 4) == "\tKa ") {
 			std::stringstream ka(line.substr(4));
 			float x, y, z;
 			ka >> x >> y >> z;
 			m.ambient = vec3(x, y, z);
 		}
 		//Diffuse
-		else if (line.substr(0, 3) == "Kd ") {
+		else if (line.substr(0, 4) == "\tKd ") {
 			std::stringstream kd(line.substr(4));
 			float x, y, z;
 			kd >> x >> y >> z;
 			m.diffuse = vec3(x, y, z);
 		}
 		//Specular
-		else if (line.substr(0, 3) == "Ks ") {
+		else if (line.substr(0, 4) == "\tKs ") {
 			std::stringstream ks(line.substr(4));
 			float x, y, z;
 			ks >> x >> y >> z;
