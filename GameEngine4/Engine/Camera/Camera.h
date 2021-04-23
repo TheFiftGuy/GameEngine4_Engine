@@ -22,6 +22,9 @@ public:
 	mat4 GetOrthographic() const;
 	vec3 GetPosition() const;
 
+	float GetNearPlane() const;
+	float GetFarPlane() const;
+
 	void AddLightSource(LightSource* lightSource_);
 	std::vector<LightSource*> GetLightSourceList() const;
 

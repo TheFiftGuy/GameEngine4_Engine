@@ -13,6 +13,8 @@ bool GameScene::OnCreate() {
 	CoreEngine::GetInstance()->GetCamera()->SetPosition(vec3(0.0f, 0.0f, 4.0f));
 	CoreEngine::GetInstance()->GetCamera()->AddLightSource(new LightSource(vec3(0.0f, 0.0f, 2.0f), 
 																				0.1f, 0.5f, 0.5f, vec3(1.0f, 1.0f, 1.0f)));
+	CollisionHandler::GetInstance()->OnCreate();
+	
 	Model* diceModel = new Model("Resources/Models/Dice.obj", "Resources/Materials/Dice.mtl", ShaderHandler::GetInstance()->GetShader("defaultShader"));
 	Model* appleModel = new Model("Resources/Models/Apple.obj", "Resources/Materials/Apple.mtl", ShaderHandler::GetInstance()->GetShader("defaultShader"));
 

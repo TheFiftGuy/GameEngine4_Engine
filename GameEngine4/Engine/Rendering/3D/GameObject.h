@@ -18,12 +18,15 @@ public:
 	vec3 GetScale() const;
 	string GetName() const;
 	BoundingBox GetBoundingBox() const;
+	bool GetHit() const;
 	
 	void SetPosition(vec3 position_);
 	void SetAngle(float angle_);
 	void SetRotation(vec3 rotation_);
 	void SetScale(vec3 scale_);
 	void SetName(string name_);
+	void SetHit(bool hit_, int buttonType_);
+
 private:
 	Model* model;
 	unsigned int modelInstance;
@@ -34,6 +37,8 @@ private:
 	string name;
 
 	BoundingBox boundingBox;
+
+	bool hit;
 };
 
 #endif

@@ -58,14 +58,20 @@ mat4 Camera::GetPerspective() const
     return perspective;
 }
 
-mat4 Camera::GetOrthographic() const
-{
+mat4 Camera::GetOrthographic() const    {
     return orthographic;
 }
 
-vec3 Camera::GetPosition() const
-{
+vec3 Camera::GetPosition() const    {
     return position;
+}
+
+float Camera::GetNearPlane() const  {
+    return nearPlane;
+}
+
+float Camera::GetFarPlane() const   {
+    return farPlane;
 }
 
 void Camera::AddLightSource(LightSource* lightSource_)  {
