@@ -165,6 +165,7 @@
     <ClCompile Include="Engine\Graphics\MaterialHandler.cpp" />
     <ClCompile Include="Engine\FX\MaterialLoader.cpp" />
     <ClCompile Include="Engine\Events\MouseEventListener.cpp" />
+    <ClCompile Include="Engine\Core\OctSpacialPartition.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Math\CollisionHandler.h" />
@@ -193,6 +194,7 @@
     <ClInclude Include="Engine\FX\MaterialLoader.h" />
     <ClInclude Include="Engine\Events\MouseEventListener.h" />
     <ClInclude Include="Engine\Math\Ray.h" />
+    <ClInclude Include="Engine\Core\OctSpacialPartition.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Shaders\FragmentShader.glsl" />
