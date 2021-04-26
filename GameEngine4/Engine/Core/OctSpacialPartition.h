@@ -31,6 +31,7 @@ public:
 	int GetChildCount() const;
 
 private:
+	friend class OctSpacialPartition;
 	BoundingBox* octBounds;
 	OctNode* parent;
 	OctNode* children[CHILDREN_NUMBER];

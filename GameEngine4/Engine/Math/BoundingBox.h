@@ -29,8 +29,13 @@ struct BoundingBox {
 		vec3 otherMaxCorner = GetTransformedPoint(box_->maxVert, box_->transform);
 
 		//add collision detection
+		if ((minCorner.x <= otherMaxCorner.x && maxCorner.x >= otherMinCorner.x) &&
+			(minCorner.y <= otherMaxCorner.y && maxCorner.y >= otherMinCorner.y) &&
+			(minCorner.z <= otherMaxCorner.z && maxCorner.z >= otherMinCorner.z)) {
+			return true;
+		}
 		
-		return true;
+		return false;
 	}
 
 

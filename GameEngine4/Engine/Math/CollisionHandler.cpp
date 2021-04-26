@@ -2,11 +2,10 @@
 #include "../Core/CoreEngine.h"
 
 unique_ptr<CollisionHandler> CollisionHandler::collisionInstance = nullptr;
-vector<GameObject*> CollisionHandler::colliders = vector<GameObject*>(); //teacher question
 vector<GameObject*> CollisionHandler::prevCollisions = vector<GameObject*>();
+OctSpacialPartition* CollisionHandler::scenePartition = nullptr;
 
 CollisionHandler::CollisionHandler() {
-	colliders.reserve(10);
 	prevCollisions.reserve(10);
 }
 
@@ -21,17 +20,15 @@ CollisionHandler* CollisionHandler::GetInstance()	{
 	return collisionInstance.get();
 }
 
-void CollisionHandler::OnCreate()	{
-	colliders.clear();
+void CollisionHandler::OnCreate(float worldSize_)	{
 	prevCollisions.clear();
+	scenePartition = new OctSpacialPartition(worldSize_);
 }
 
 void CollisionHandler::OnDestroy() {
-	for (auto *entry : colliders) {
-		entry = nullptr;
-	}
-	colliders.clear();
-
+	delete scenePartition;
+	scenePartition = nullptr;
+	
 	for (auto *entry: prevCollisions) {
 		entry = nullptr;
 	}
@@ -39,39 +36,33 @@ void CollisionHandler::OnDestroy() {
 }
 
 void CollisionHandler::AddObject(GameObject* go_)	{
-	colliders.push_back(go_);
+	if (scenePartition != nullptr) { //teacher question (same)
+		scenePartition->AddObject(go_);
+	}
 }
 
 void CollisionHandler::MouseUpdate(vec2 mousePosition_, int buttonType_)	{
 	Ray mouseRay = CollisionDetection::MousePosToWorldRay(mousePosition_, CoreEngine::GetInstance()->GetScreenWidth(), 
 								CoreEngine::GetInstance()->GetScreenHeight(), CoreEngine::GetInstance()->GetCamera());
+	
+	if (scenePartition != nullptr) { //teacher question (why not if(scene) )
+		GameObject* hitResult = scenePartition->GetCollision(mouseRay);
 
-	GameObject* hitResult = nullptr;
-	float shortestDistance = FLT_MAX;
+		if (hitResult) {
+			hitResult->SetHit(true, buttonType_);
+		}
 
-	for (auto *g : colliders) {
-		BoundingBox box = g->GetBoundingBox();
-		if (mouseRay.isColliding(&box)) { //teacher question
-			if (mouseRay.intersectionDist < shortestDistance) {
-				hitResult = g;
-				shortestDistance = mouseRay.intersectionDist;
+		for (auto* c : prevCollisions) {
+			if (c != hitResult && c != nullptr) {
+				c->SetHit(false, buttonType_);
 			}
+			c = nullptr;
 		}
-	}
+		prevCollisions.clear();
 
-	if(hitResult) {
-		hitResult->SetHit(true, buttonType_);
-	}
-
-	for (auto *c : prevCollisions) {
-		if (hitResult != c && c != nullptr) {
-			c->SetHit(false, buttonType_);
+		if (hitResult) {
+			prevCollisions.push_back(hitResult);
 		}
-	}
-	prevCollisions.clear();
-
-	if(hitResult) {
-		prevCollisions.push_back(hitResult);
 	}
 }
 
