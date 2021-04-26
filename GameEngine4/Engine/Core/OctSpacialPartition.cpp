@@ -92,7 +92,7 @@ int OctNode::GetObjectCount() const	{
 }
 
 bool OctNode::IsLeaf() const	{
-	if (children[0] == nullptr) { //teacher question
+	if (children[0] == nullptr) {
 		return true;
 	}
 	return false;
@@ -123,9 +123,8 @@ OctSpacialPartition::~OctSpacialPartition()	{
 		for(auto *cell : rayIntersectionList) {
 			cell = nullptr;
 		}
-		//rayIntersectionList.clear();
 	}
-	rayIntersectionList.clear(); //teacher question (teacher had it above)
+	rayIntersectionList.clear();
 
 	delete root;
 	root = nullptr;
@@ -140,9 +139,9 @@ GameObject* OctSpacialPartition::GetCollision(Ray ray_)	{
 		for (auto* cell : rayIntersectionList) {
 			cell = nullptr;
 		}
-		//rayIntersectionList.clear();
+	
 	}
-	rayIntersectionList.clear(); //teacher question (teacher had it above)
+	rayIntersectionList.clear();
 	PrepareCollisionQuery(root, ray_);
 	
 	GameObject* result = nullptr;
@@ -150,22 +149,21 @@ GameObject* OctSpacialPartition::GetCollision(Ray ray_)	{
 	for (auto* cell : rayIntersectionList) {
 		for (auto* obj : cell->objectList) {
 			BoundingBox box = obj->GetBoundingBox();
-			if (ray_.isColliding(&box)) { //teacher question  (Declan check PasteBin for screenshots)
+			if (ray_.isColliding(&box)) { 
 				result = obj;
 				shortestDistance = ray_.intersectionDist;
 			}
 		}
-		if (result != nullptr) { //teacher question: why not if(result)
+		if (result) {
 			return result;
 		}
-		
 	}
 	return nullptr;
 }
 
 void OctSpacialPartition::AddObjectToCell(OctNode* cell_, GameObject* obj_)	{
 	if (cell_->IsLeaf()) {
-		BoundingBox objBox = obj_->GetBoundingBox(); //teacher question (why cant use I value)
+		BoundingBox objBox = obj_->GetBoundingBox();
 		if (cell_->GetBoundingBox()->Intersects(&objBox)) {
 			cell_->AddCollisionObject(obj_);
 			cout << obj_->GetName() << " was added to cell: " << to_string(cell_->GetBoundingBox()->maxVert) << endl; //teacher question : the print statment in the week 13 vid shows the print of MAXVERT?
@@ -173,22 +171,20 @@ void OctSpacialPartition::AddObjectToCell(OctNode* cell_, GameObject* obj_)	{
 		}
 	}
 	else {
-		for (int i = 0; i < CHILDREN_NUMBER; i++) { //teacher question - for each
+		for (int i = 0; i < CHILDREN_NUMBER; i++) {
 			AddObjectToCell(cell_->children[i], obj_);
 		}
 	}
 }
 
 void OctSpacialPartition::PrepareCollisionQuery(OctNode* cell_, Ray ray_)	{
-	//if passed in node is leaf - checks to see if ray thats passed in intesects with boudning box - if does node gets added to ray intesection vector
 	if(cell_->IsLeaf()) {
 		if (ray_.isColliding(cell_->GetBoundingBox())) {
 			rayIntersectionList.push_back(cell_);
 		}
 	}
-	//if node is not leaf, loop recusively 
 	else {
-		for (int i = 0; i < CHILDREN_NUMBER; i++) { //teacher question - for each
+		for (int i = 0; i < CHILDREN_NUMBER; i++) {
 			PrepareCollisionQuery(cell_->children[i], ray_);
 		}
 	}
